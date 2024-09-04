@@ -1,34 +1,33 @@
 package com.aligent.demo.Services;
 
+import com.aligent.demo.Models.CustomDateTime;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Service
 public class DateTimeService {
 
-    public String getDaysBetween(LocalDateTime start, LocalDateTime end, String zoneId, String unit) {
-        if (start == null || end == null || start.isAfter(end)) {
-            //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid date-time parameters.");
+    public String getDaysBetween(CustomDateTime start, CustomDateTime end, String unit) {
+        if (start == null || end == null || start.getDateTime().isAfter(end.getDateTime())) {
             return null;
         }
-        long days = ChronoUnit.DAYS.between(start, end);
+        long days = ChronoUnit.DAYS.between(start.toZonedDateTime(), end.toZonedDateTime());
         if (unit != null) {
             return convertTime(days, unit);
         }
         return days + " days";
     }
 
-    public String getWeekDaysBetween(LocalDateTime start, LocalDateTime end, String zoneId, String unit) {
-        if (start == null || end == null || start.isAfter(end)) {
-            //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid date-time parameters.");
+    public String getWeekDaysBetween(CustomDateTime start, CustomDateTime end, String unit) {
+        if (start == null || end == null || start.getDateTime().isAfter(end.getDateTime())) {
             return null;
         }
-        long days = ChronoUnit.DAYS.between(start, end);
+        long days = ChronoUnit.DAYS.between(start.toZonedDateTime(), end.toZonedDateTime());
         long weekDays = 0;
         for (int i = 0; i < days; i++) {
-            LocalDateTime date = start.plusDays(i);
+            ZonedDateTime date = start.toZonedDateTime().plusDays(i);
             if (date.getDayOfWeek().getValue() < 6) {
                 weekDays++;
             }
@@ -39,12 +38,11 @@ public class DateTimeService {
         return weekDays + " weekdays";
     }
 
-    public String getCompleteWeeksBetween(LocalDateTime start, LocalDateTime end, String zoneId, String unit) {
-        if (start == null || end == null || start.isAfter(end)) {
-            //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid date-time parameters.");
+    public String getCompleteWeeksBetween(CustomDateTime start, CustomDateTime end, String unit) {
+        if (start == null || end == null || start.getDateTime().isAfter(end.getDateTime())) {
             return null;
         }
-        long days = ChronoUnit.DAYS.between(start, end);
+        long days = ChronoUnit.DAYS.between(start.toZonedDateTime(), end.toZonedDateTime());
         if (unit != null) {
             return convertTime(days / 7, unit);
         }
@@ -52,9 +50,10 @@ public class DateTimeService {
     }
 
     public String convertTime(long value, String unit) {
-        if (unit == null) {
+        if (unit == null || "days".equalsIgnoreCase(unit)) {
             return value + " days";
-        } else if (value == 0) {
+        }
+        if (value == 0) {
             return "0 " + unit;
         } else if (value < 0) {
             throw new IllegalArgumentException("Invalid value: " + value);
