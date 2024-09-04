@@ -1,12 +1,14 @@
 package com.aligent.demo;
 
 import com.aligent.demo.Services.DateTimeService;
+import com.aligent.demo.Models.CustomDateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.ZoneId;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -17,82 +19,82 @@ class DemoApplicationTests {
     @Autowired
     private final DateTimeService dateTimeService = new DateTimeService();
 
-    //standard test
+    // standard test
     @Test
     public void testDaysBetween() {
-        LocalDateTime start = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0);
-        String result = dateTimeService.getDaysBetween(start, end, null, null);
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0),  "UTC");
+        String result = dateTimeService.getDaysBetween(start, end, null);
         assertEquals("9 days", result);
     }
 
     @Test
     public void testGetWeekdaysBetween() {
-        LocalDateTime start = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0);
-        String result = dateTimeService.getWeekDaysBetween(start, end, null, null);
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0),  "UTC");
+        String result = dateTimeService.getWeekDaysBetween(start, end, null);
         assertEquals("7 weekdays", result);
     }
 
     @Test
     public void testGetCompleteWeeksBetween() {
-        LocalDateTime start = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2024, Month.JANUARY, 22, 0, 0);
-        String result = dateTimeService.getCompleteWeeksBetween(start, end, null, null);
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 22, 0, 0),  "UTC");
+        String result = dateTimeService.getCompleteWeeksBetween(start, end, null);
         assertEquals("3 weeks", result);
     }
 
-    //edge case test
+    // edge case test
     @Test
     public void testDaysBetweenEdgeCase() {
-        LocalDateTime start = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        String result = dateTimeService.getDaysBetween(start, end, null, null);
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        String result = dateTimeService.getDaysBetween(start, end, null);
         assertEquals("0 days", result);
     }
 
     @Test
     public void testGetWeekdaysBetweenEdgeCase() {
-        LocalDateTime start = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        String result = dateTimeService.getWeekDaysBetween(start, end, null, null);
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        String result = dateTimeService.getWeekDaysBetween(start, end, null);
         assertEquals("0 weekdays", result);
     }
 
     @Test
     public void testGetCompleteWeeksBetweenEdgeCase() {
-        LocalDateTime start = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        String result = dateTimeService.getCompleteWeeksBetween(start, end, null, null);
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        String result = dateTimeService.getCompleteWeeksBetween(start, end, null);
         assertEquals("0 weeks", result);
     }
 
-    //boundary test
+    // boundary test
     @Test
     public void testDaysBetweenBoundary() {
-        LocalDateTime start = LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        String result = dateTimeService.getDaysBetween(start, end, null, null);
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        String result = dateTimeService.getDaysBetween(start, end, null);
         assertNull(result);
     }
 
     @Test
     public void testGetWeekdaysBetweenBoundary() {
-        LocalDateTime start = LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        String result = dateTimeService.getWeekDaysBetween(start, end, null, null);
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        String result = dateTimeService.getWeekDaysBetween(start, end, null);
         assertNull(result);
     }
 
     @Test
     public void testGetCompleteWeeksBetweenBoundary() {
-        LocalDateTime start = LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        String result = dateTimeService.getCompleteWeeksBetween(start, end, null, null);
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        String result = dateTimeService.getCompleteWeeksBetween(start, end, null);
         assertNull(result);
     }
 
-    //Time conversion test
+    // time conversion test
     @Test
     public void testConvertTime() {
         long value = 5;
@@ -155,28 +157,28 @@ class DemoApplicationTests {
         }
     }
 
-    //additional test
+    // additional test
     @Test
     public void testGetDaysBetweenNull() {
-        LocalDateTime start = null;
-        LocalDateTime end = null;
-        String result = dateTimeService.getDaysBetween(start, end, null, null);
+        CustomDateTime start = null;
+        CustomDateTime end = null;
+        String result = dateTimeService.getDaysBetween(start, end, null);
         assertNull(result);
     }
 
     @Test
     public void testGetWeekDaysBetweenNull() {
-        LocalDateTime start = null;
-        LocalDateTime end = null;
-        String result = dateTimeService.getWeekDaysBetween(start, end, null, null);
+        CustomDateTime start = null;
+        CustomDateTime end = null;
+        String result = dateTimeService.getWeekDaysBetween(start, end, null);
         assertNull(result);
     }
 
     @Test
     public void testGetCompleteWeeksBetweenNull() {
-        LocalDateTime start = null;
-        LocalDateTime end = null;
-        String result = dateTimeService.getCompleteWeeksBetween(start, end, null, null);
+        CustomDateTime start = null;
+        CustomDateTime end = null;
+        String result = dateTimeService.getCompleteWeeksBetween(start, end, null);
         assertNull(result);
     }
 
@@ -199,30 +201,78 @@ class DemoApplicationTests {
         assertEquals("0 days", result);
     }
 
-    //integration test
+    // integration test
     @Test
     public void testIntegration() {
-        LocalDateTime start = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0);
-        String result = dateTimeService.getDaysBetween(start, end, null, null);
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0),  "UTC");
+        String result = dateTimeService.getDaysBetween(start, end, null);
         assertEquals("9 days", result);
-        result = dateTimeService.getWeekDaysBetween(start, end, null, null);
+        result = dateTimeService.getWeekDaysBetween(start, end, null);
         assertEquals("7 weekdays", result);
-        result = dateTimeService.getCompleteWeeksBetween(start, end, null, null);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
         assertEquals("1 weeks", result);
     }
 
     @Test
     public void testIntegrationNull() {
-        LocalDateTime start = null;
-        LocalDateTime end = null;
-        String result = dateTimeService.getDaysBetween(start, end, null, null);
+        CustomDateTime start = null;
+        CustomDateTime end = null;
+        String result = dateTimeService.getDaysBetween(start, end, null);
         assertNull(result);
-        result = dateTimeService.getWeekDaysBetween(start, end, null, null);
+        result = dateTimeService.getWeekDaysBetween(start, end, null);
         assertNull(result);
-        result = dateTimeService.getCompleteWeeksBetween(start, end, null, null);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
         assertNull(result);
     }
 
+    //Testing the timezone conversion
+    @Test
+    public void testTimeZoneConversion() {
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0),  "UTC");
+        String result = dateTimeService.getDaysBetween(start, end, null);
+        assertEquals("9 days", result);
+        result = dateTimeService.getWeekDaysBetween(start, end, null);
+        assertEquals("7 weekdays", result);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
+        assertEquals("1 weeks", result);
+    }
+
+    @Test
+    public void testTimeZoneConversionNull() {
+        CustomDateTime start = null;
+        CustomDateTime end = null;
+        String result = dateTimeService.getDaysBetween(start, end, null);
+        assertNull(result);
+        result = dateTimeService.getWeekDaysBetween(start, end, null);
+        assertNull(result);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
+        assertNull(result);
+    }
+
+    @Test
+    public void testTimeZoneConversionBoundary() {
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        String result = dateTimeService.getDaysBetween(start, end, null);
+        assertNull(result);
+        result = dateTimeService.getWeekDaysBetween(start, end, null);
+        assertNull(result);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
+        assertNull(result);
+    }
+
+    @Test
+    public void testTimeZoneConversionEdgeCase() {
+        CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
+        String result = dateTimeService.getDaysBetween(start, end, null);
+        assertEquals("0 days", result);
+        result = dateTimeService.getWeekDaysBetween(start, end, null);
+        assertEquals("0 weekdays", result);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
+        assertEquals("0 weeks", result);
+    }
 
 }
