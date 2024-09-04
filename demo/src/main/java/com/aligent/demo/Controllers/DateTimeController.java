@@ -17,32 +17,35 @@ public class DateTimeController {
     private DateTimeService dateTimeService;
 
     @RequestMapping("/daysBetween")
-    public long getDaysBetween(
+    public String getDaysBetween(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
-            @RequestParam(required = false) String zoneId
+            @RequestParam(required = false) String zoneId,
+            @RequestParam(required = false) String unit
     ) {
 
-        return dateTimeService.getDaysBetween(start, end, zoneId);
+        return dateTimeService.getDaysBetween(start, end, zoneId, unit);
     }
 
     @RequestMapping("/weekDaysBetween")
-    public long getWeekDaysBetween(
+    public String getWeekDaysBetween(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
-            @RequestParam(required = false) String zoneId
+            @RequestParam(required = false) String zoneId,
+            @RequestParam(required = false) String unit
     ) {
 
-        return dateTimeService.getWeekDaysBetween(start, end, zoneId);
+        return dateTimeService.getWeekDaysBetween(start, end, zoneId, unit);
     }
 
     @RequestMapping("/completeWeeksBetween")
-    public long getCompleteWeeksBetween(
+    public String getCompleteWeeksBetween(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
-            @RequestParam(required = false) String zoneId
+            @RequestParam(required = false) String zoneId,
+            @RequestParam(required = false) String unit
     ) {
 
-        return dateTimeService.getCompleteWeeksBetween(start, end, zoneId);
+        return dateTimeService.getCompleteWeeksBetween(start, end, zoneId, unit);
     }
 }
