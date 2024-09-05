@@ -54,9 +54,9 @@ public class DateTimeService {
                 weekDays++;
             }
         }
-        if (unit != null) {
-            return convertTime(weekDays, unit);
-        }
+//        if (unit != null) {
+//            return convertTime(weekDays, unit);
+//        }
         return weekDays + " weekdays";
     }
 
@@ -74,9 +74,9 @@ public class DateTimeService {
             return null;
         }
         long days = ChronoUnit.DAYS.between(start.toZonedDateTime(), end.toZonedDateTime());
-        if (unit != null) {
-            return convertTime(days / 7, unit);
-        }
+//        if (unit != null) {
+//            return convertTime(days / 7, unit);
+//        }
         return days / 7 + " weeks";
     }
 
@@ -88,7 +88,7 @@ public class DateTimeService {
      */
     public String convertTime(long value, String unit) {
         if (unit == null || "days".equalsIgnoreCase(unit)) {
-            return value + " days";
+            return value + " " + unit;
         }
         if (value == 0) {
             return "0 " + unit;

@@ -6,14 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/datetime")
+@CrossOrigin(origins = "*")
 public class DateTimeController {
 
     @Autowired
@@ -21,7 +20,7 @@ public class DateTimeController {
 
     private static final Logger logger = LoggerFactory.getLogger(DateTimeController.class);
 
-    @RequestMapping("/daysBetween")
+    @PostMapping("/daysBetween")
     public String getDaysBetween(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
             @RequestParam(required = false) String startZoneId,
