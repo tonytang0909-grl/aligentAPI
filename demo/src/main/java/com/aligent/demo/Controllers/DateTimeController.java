@@ -2,6 +2,8 @@ package com.aligent.demo.Controllers;
 
 import com.aligent.demo.Models.CustomDateTime;
 import com.aligent.demo.Services.DateTimeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ public class DateTimeController {
     @Autowired
     private DateTimeService dateTimeService;
 
+    private static final Logger logger = LoggerFactory.getLogger(DateTimeController.class);
+
     @RequestMapping("/daysBetween")
     public String getDaysBetween(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
@@ -25,6 +29,9 @@ public class DateTimeController {
             @RequestParam(required = false) String endZoneId,
             @RequestParam(required = false) String unit
     ) {
+        // Log the request
+        logger.debug("Received request for daysBetween with start={}, startZoneId={}, end={}, endZoneId={}, unit={}",
+                start, startZoneId, end, endZoneId, unit);
         if (startZoneId == null) {
             startZoneId = "UTC";
         }
@@ -44,6 +51,9 @@ public class DateTimeController {
             @RequestParam(required = false) String endZoneId,
             @RequestParam(required = false) String unit
     ) {
+        // Log the request
+        logger.debug("Received request for weekDaysBetween with start={}, startZoneId={}, end={}, endZoneId={}, unit={}",
+                start, startZoneId, end, endZoneId, unit);
         if (startZoneId == null) {
             startZoneId = "UTC";
         }
@@ -63,6 +73,9 @@ public class DateTimeController {
             @RequestParam(required = false) String endZoneId,
             @RequestParam(required = false) String unit
     ) {
+        // Log the request
+        logger.debug("Received request for completeWeeksBetween with start={}, startZoneId={}, end={}, endZoneId={}, unit={}",
+                start, startZoneId, end, endZoneId, unit);
         if (startZoneId == null) {
             startZoneId = "UTC";
         }
