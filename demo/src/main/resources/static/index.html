@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DateTime API Tester</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .form-group button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #007bff;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #555;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>DateTime API Tester</h1>
+
+    <!-- API Selection -->
+    <div class="form-group">
+        <label for="apiSelect">Select API to Test</label>
+        <select id="apiSelect">
+            <option value="">Select API</option>
+            <option value="daysBetween">Days Between</option>
+            <option value="weekDaysBetween">Weekdays Between</option>
+            <option value="completeWeeksBetween">Complete Weeks Between</option>
+        </select>
+    </div>
+
+    <!-- Test Form -->
+    <div id="testForm">
+        <!-- Days Between Section -->
+        <div id="daysBetweenSection" class="section hidden">
+            <h2>Days Between</h2>
+            <form id="daysBetween">
+                <div class="form-group">
+                    <label for="startDateTimeDays">Start DateTime</label>
+                    <input type="datetime-local" id="startDateTimeDays" name="start" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="endDateTimeDays">End DateTime</label>
+                    <input type="datetime-local" id="endDateTimeDays" name="end" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="startZoneIdDays">Start Time Zone</label>
+                    <select id="startZoneIdDays" name="startZoneId">
+                        <option value="UTC">UTC</option>
+                        <option value="America/New_York">America/New_York</option>
+                        <option value="Europe/London">Europe/London</option>
+                        <option value="Asia/Tokyo">Asia/Tokyo</option>
+                        <!-- Add more time zones as needed -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="endZoneIdDays">End Time Zone</label>
+                    <select id="endZoneIdDays" name="endZoneId">
+                        <option value="UTC">UTC</option>
+                        <option value="America/New_York">America/New_York</option>
+                        <option value="Europe/London">Europe/London</option>
+                        <option value="Asia/Tokyo">Asia/Tokyo</option>
+                        <!-- Add more time zones as needed -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="unitDays">Convert To</label>
+                    <select id="unitDays" name="unit">
+                        <option value="days">Days</option>
+                        <option value="seconds">Seconds</option>
+                        <option value="minutes">Minutes</option>
+                        <option value="hours">Hours</option>
+                        <option value="years">Years</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Test Days Between API</button>
+                </div>
+            </form>
+            <div class="result" id="resultDays"></div>
+        </div>
+
+        <!-- Weekdays Between Section -->
+        <div id="weekDaysBetweenSection" class="section hidden">
+            <h2>Weekdays Between</h2>
+            <form id="weekDaysBetween">
+                <div class="form-group">
+                    <label for="startDateTimeWeekDays">Start DateTime</label>
+                    <input type="datetime-local" id="startDateTimeWeekDays" name="start" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="endDateTimeWeekDays">End DateTime</label>
+                    <input type="datetime-local" id="endDateTimeWeekDays" name="end" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="startZoneIdWeekDays">Start Time Zone</label>
+                    <select id="startZoneIdWeekDays" name="startZoneId">
+                        <option value="UTC">UTC</option>
+                        <option value="America/New_York">America/New_York</option>
+                        <option value="Europe/London">Europe/London</option>
+                        <option value="Asia/Tokyo">Asia/Tokyo</option>
+                        <!-- Add more time zones as needed -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="endZoneIdWeekDays">End Time Zone</label>
+                    <select id="endZoneIdWeekDays" name="endZoneId">
+                        <option value="UTC">UTC</option>
+                        <option value="America/New_York">America/New_York</option>
+                        <option value="Europe/London">Europe/London</option>
+                        <option value="Asia/Tokyo">Asia/Tokyo</option>
+                        <!-- Add more time zones as needed -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="unitWeekDays">Convert To</label>
+                    <select id="unitWeekDays" name="unit">
+                        <option value="days">Days</option>
+                        <option value="seconds">Seconds</option>
+                        <option value="minutes">Minutes</option>
+                        <option value="hours">Hours</option>
+                        <option value="years">Years</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Test Weekdays Between API</button>
+                </div>
+            </form>
+            <div class="result" id="resultWeekDays"></div>
+        </div>
+
+        <!-- Complete Weeks Between Section -->
+        <div id="completeWeeksBetweenSection" class="section hidden">
+            <h2>Complete Weeks Between</h2>
+            <form id="completeWeeksBetween">
+                <div class="form-group">
+                    <label for="startDateTimeCompleteWeeks">Start DateTime</label>
+                    <input type="datetime-local" id="startDateTimeCompleteWeeks" name="start" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="endDateTimeCompleteWeeks">End DateTime</label>
+                    <input type="datetime-local" id="endDateTimeCompleteWeeks" name="end" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="startZoneIdCompleteWeeks">Start Time Zone</label>
+                    <select id="startZoneIdCompleteWeeks" name="startZoneId">
+                        <option value="UTC">UTC</option>
+                        <option value="America/New_York">America/New_York</option>
+                        <option value="Europe/London">Europe/London</option>
+                        <option value="Asia/Tokyo">Asia/Tokyo</option>
+                        <!-- Add more time zones as needed -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="endZoneIdCompleteWeeks">End Time Zone</label>
+                    <select id="endZoneIdCompleteWeeks" name="endZoneId">
+                        <option value="UTC">UTC</option>
+                        <option value="America/New_York">America/New_York</option>
+                        <option value="Europe/London">Europe/London</option>
+                        <option value="Asia/Tokyo">Asia/Tokyo</option>
+                        <!-- Add more time zones as needed -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="unitCompleteWeeks">Convert To</label>
+                    <select id="unitCompleteWeeks" name="unit">
+                        <option value="days">Days</option>
+                        <option value="seconds">Seconds</option>
+                        <option value="minutes">Minutes</option>
+                        <option value="hours">Hours</option>
+                        <option value="years">Years</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Test Complete Weeks API</button>
+                </div>
+            </form>
+            <div class="result" id="resultCompleteWeeks"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('apiSelect').addEventListener('change', function() {
+        const selectedApi = this.value;
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.add('hidden');
+        });
+
+        if (selectedApi) {
+            document.getElementById(`${selectedApi}Section`).classList.remove('hidden');
+        }
+    });
+
+    function handleFormSubmit(formId, resultId) {
+        document.getElementById(formId).addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new URLSearchParams(new FormData(this)).toString();
+            fetch(`/api/datetime/${formId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData
+            })
+                .then(response => {
+                    console.log('Response Object:', response);  // Log the entire response object
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    // Get the response body as text
+                    return response.text();
+                })
+                .then(text => {
+                    //console.log('Response Text:', text);  // Log raw text to understand its structure
+
+                    // Attempt to parse JSON from the text
+                    try {
+                        //const data = JSON.parse(text);
+                        document.getElementById(resultId).textContent = `Result: ${text}`;
+                    } catch (e) {
+                        console.error('JSON Parsing Error:', e);
+                        document.getElementById(resultId).textContent = 'Invalid JSON response from server.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch Error:', error);
+                    document.getElementById(resultId).textContent = 'An error occurred. Please try again.';
+                });
+
+        });
+    }
+
+    handleFormSubmit('daysBetween', 'resultDays');
+    handleFormSubmit('weekDaysBetween', 'resultWeekDays');
+    handleFormSubmit('completeWeeksBetween', 'resultCompleteWeeks');
+</script>
+
+</body>
+</html>
