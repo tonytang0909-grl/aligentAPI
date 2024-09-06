@@ -24,7 +24,7 @@ class DemoApplicationTests {
     public void testDaysBetween() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0),  "UTC");
-        String result = dateTimeService.getDaysBetween(start, end, null);
+        String result = dateTimeService.getDaysBetween(start, end, "days");
         assertEquals("9 days", result);
     }
 
@@ -32,7 +32,7 @@ class DemoApplicationTests {
     public void testGetWeekdaysBetween() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0),  "UTC");
-        String result = dateTimeService.getWeekDaysBetween(start, end, null);
+        String result = dateTimeService.getWeekDaysBetween(start, end, "days");
         assertEquals("7 weekdays", result);
     }
 
@@ -40,7 +40,7 @@ class DemoApplicationTests {
     public void testGetCompleteWeeksBetween() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 22, 0, 0),  "UTC");
-        String result = dateTimeService.getCompleteWeeksBetween(start, end, null);
+        String result = dateTimeService.getCompleteWeeksBetween(start, end, "days");
         assertEquals("3 weeks", result);
     }
 
@@ -49,7 +49,7 @@ class DemoApplicationTests {
     public void testDaysBetweenEdgeCase() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
-        String result = dateTimeService.getDaysBetween(start, end, null);
+        String result = dateTimeService.getDaysBetween(start, end, "days");
         assertEquals("0 days", result);
     }
 
@@ -57,7 +57,7 @@ class DemoApplicationTests {
     public void testGetWeekdaysBetweenEdgeCase() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
-        String result = dateTimeService.getWeekDaysBetween(start, end, null);
+        String result = dateTimeService.getWeekDaysBetween(start, end, "days");
         assertEquals("0 weekdays", result);
     }
 
@@ -65,7 +65,7 @@ class DemoApplicationTests {
     public void testGetCompleteWeeksBetweenEdgeCase() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
-        String result = dateTimeService.getCompleteWeeksBetween(start, end, null);
+        String result = dateTimeService.getCompleteWeeksBetween(start, end, "days");
         assertEquals("0 weeks", result);
     }
 
@@ -74,24 +74,24 @@ class DemoApplicationTests {
     public void testDaysBetweenBoundary() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
-        String result = dateTimeService.getDaysBetween(start, end, null);
-        assertNull(result);
+        String result = dateTimeService.getDaysBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
     }
 
     @Test
     public void testGetWeekdaysBetweenBoundary() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
-        String result = dateTimeService.getWeekDaysBetween(start, end, null);
-        assertNull(result);
+        String result = dateTimeService.getWeekDaysBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
     }
 
     @Test
     public void testGetCompleteWeeksBetweenBoundary() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
-        String result = dateTimeService.getCompleteWeeksBetween(start, end, null);
-        assertNull(result);
+        String result = dateTimeService.getCompleteWeeksBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
     }
 
     // time conversion test
@@ -162,30 +162,30 @@ class DemoApplicationTests {
     public void testGetDaysBetweenNull() {
         CustomDateTime start = null;
         CustomDateTime end = null;
-        String result = dateTimeService.getDaysBetween(start, end, null);
-        assertNull(result);
+        String result = dateTimeService.getDaysBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
     }
 
     @Test
     public void testGetWeekDaysBetweenNull() {
         CustomDateTime start = null;
         CustomDateTime end = null;
-        String result = dateTimeService.getWeekDaysBetween(start, end, null);
-        assertNull(result);
+        String result = dateTimeService.getWeekDaysBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
     }
 
     @Test
     public void testGetCompleteWeeksBetweenNull() {
         CustomDateTime start = null;
         CustomDateTime end = null;
-        String result = dateTimeService.getCompleteWeeksBetween(start, end, null);
-        assertNull(result);
+        String result = dateTimeService.getCompleteWeeksBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
     }
 
     @Test
     public void testConvertTimeNull() {
         long value = 5;
-        String unit = null;
+        String unit = "days";
         try {
             dateTimeService.convertTime(value, unit);
         } catch (IllegalArgumentException e) {
@@ -196,7 +196,7 @@ class DemoApplicationTests {
     @Test
     public void testConvertTimeZeroNull() {
         long value = 0;
-        String unit = null;
+        String unit = "days";
         String result = dateTimeService.convertTime(value, unit);
         assertEquals("0 days", result);
     }
@@ -206,11 +206,11 @@ class DemoApplicationTests {
     public void testIntegration() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0),  "UTC");
-        String result = dateTimeService.getDaysBetween(start, end, null);
+        String result = dateTimeService.getDaysBetween(start, end, "days");
         assertEquals("9 days", result);
-        result = dateTimeService.getWeekDaysBetween(start, end, null);
+        result = dateTimeService.getWeekDaysBetween(start, end, "days");
         assertEquals("7 weekdays", result);
-        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, "days");
         assertEquals("1 weeks", result);
     }
 
@@ -218,12 +218,12 @@ class DemoApplicationTests {
     public void testIntegrationNull() {
         CustomDateTime start = null;
         CustomDateTime end = null;
-        String result = dateTimeService.getDaysBetween(start, end, null);
-        assertNull(result);
-        result = dateTimeService.getWeekDaysBetween(start, end, null);
-        assertNull(result);
-        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
-        assertNull(result);
+        String result = dateTimeService.getDaysBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
+        result = dateTimeService.getWeekDaysBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
     }
 
     //Testing the timezone conversion
@@ -231,11 +231,11 @@ class DemoApplicationTests {
     public void testTimeZoneConversion() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 10, 0, 0),  "UTC");
-        String result = dateTimeService.getDaysBetween(start, end, null);
+        String result = dateTimeService.getDaysBetween(start, end, "days");
         assertEquals("9 days", result);
-        result = dateTimeService.getWeekDaysBetween(start, end, null);
+        result = dateTimeService.getWeekDaysBetween(start, end, "days");
         assertEquals("7 weekdays", result);
-        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, "days");
         assertEquals("1 weeks", result);
     }
 
@@ -243,35 +243,35 @@ class DemoApplicationTests {
     public void testTimeZoneConversionNull() {
         CustomDateTime start = null;
         CustomDateTime end = null;
-        String result = dateTimeService.getDaysBetween(start, end, null);
-        assertNull(result);
-        result = dateTimeService.getWeekDaysBetween(start, end, null);
-        assertNull(result);
-        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
-        assertNull(result);
+        String result = dateTimeService.getDaysBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
+        result = dateTimeService.getWeekDaysBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
     }
 
     @Test
     public void testTimeZoneConversionBoundary() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 2, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
-        String result = dateTimeService.getDaysBetween(start, end, null);
-        assertNull(result);
-        result = dateTimeService.getWeekDaysBetween(start, end, null);
-        assertNull(result);
-        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
-        assertNull(result);
+        String result = dateTimeService.getDaysBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
+        result = dateTimeService.getWeekDaysBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, "days");
+        assertEquals("Parameters not valid", result);
     }
 
     @Test
     public void testTimeZoneConversionEdgeCase() {
         CustomDateTime start = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
         CustomDateTime end = new CustomDateTime(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0),  "UTC");
-        String result = dateTimeService.getDaysBetween(start, end, null);
+        String result = dateTimeService.getDaysBetween(start, end, "days");
         assertEquals("0 days", result);
-        result = dateTimeService.getWeekDaysBetween(start, end, null);
+        result = dateTimeService.getWeekDaysBetween(start, end, "days");
         assertEquals("0 weekdays", result);
-        result = dateTimeService.getCompleteWeeksBetween(start, end, null);
+        result = dateTimeService.getCompleteWeeksBetween(start, end, "days");
         assertEquals("0 weeks", result);
     }
 
