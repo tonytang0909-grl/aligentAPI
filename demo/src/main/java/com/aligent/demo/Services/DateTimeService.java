@@ -24,10 +24,10 @@ public class DateTimeService {
         // Log the calculation
         logger.debug("Calculating days between {} and {} with unit {}", start, end, unit);
         if (start == null || end == null || start.getDateTime().isAfter(end.getDateTime())) {
-            return null;
+            return "Parameters not valid";
         }
         long days = ChronoUnit.DAYS.between(start.toZonedDateTime(), end.toZonedDateTime());
-        if (unit != null) {
+        if (unit != null && !"days".equalsIgnoreCase(unit)) {
             return convertTime(days, unit);
         }
         return days + " days";
@@ -44,7 +44,7 @@ public class DateTimeService {
         // Log the calculation
         logger.debug("Calculating weekdays between {} and {} with unit {}", start, end, unit);
         if (start == null || end == null || start.getDateTime().isAfter(end.getDateTime())) {
-            return null;
+            return "Parameters not valid";
         }
         long days = ChronoUnit.DAYS.between(start.toZonedDateTime(), end.toZonedDateTime());
         long weekDays = 0;
@@ -54,9 +54,9 @@ public class DateTimeService {
                 weekDays++;
             }
         }
-//        if (unit != null) {
-//            return convertTime(weekDays, unit);
-//        }
+        if (unit != null && !unit.equalsIgnoreCase("days")) {
+            return convertTime(weekDays, unit);
+        }
         return weekDays + " weekdays";
     }
 
@@ -71,12 +71,12 @@ public class DateTimeService {
         // Log the calculation
         logger.debug("Calculating complete weeks between {} and {} with unit {}", start, end, unit);
         if (start == null || end == null || start.getDateTime().isAfter(end.getDateTime())) {
-            return null;
+            return "Parameters not valid";
         }
         long days = ChronoUnit.DAYS.between(start.toZonedDateTime(), end.toZonedDateTime());
-//        if (unit != null) {
-//            return convertTime(days / 7, unit);
-//        }
+        if (unit != null && !"days".equalsIgnoreCase(unit)) {
+            return convertTime(days, unit);
+        }
         return days / 7 + " weeks";
     }
 
@@ -88,7 +88,7 @@ public class DateTimeService {
      */
     public String convertTime(long value, String unit) {
         if (unit == null || "days".equalsIgnoreCase(unit)) {
-            return value + " " + unit;
+            return value + " days";
         }
         if (value == 0) {
             return "0 " + unit;
